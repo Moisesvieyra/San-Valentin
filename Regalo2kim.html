@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para Ti Mi Amor ❤️ - Un Año de vivencias Juntos</title>
+
+  <!-- Fuentes elegantes y románticas de Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==============================================
+       1. RESET GENERAL Y ESTILOS BASE DEL DOCUMENTO
+    ============================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lora', serif;
+      min-height: 100vh;
+      background: linear-gradient(-45deg, #ffd1dc, #ffe4e1, #fff0f5, #ffc0cb, #ff9eca, #ff85c0);
+      background-size: 600% 600%;
+      animation: gradientMove 22s ease infinite;
+      overflow: hidden;
+      color: #c71585;
+      cursor: default;
+      position: relative;
+    }
+
+    .first-message {
+  margin-bottom: 2rem;
+  text-align: center;
+  animation: fadeIn 2s ease forwards;
+}
+
+.first-message p {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #c71585;
+}
+
+.chat-bubble {
+  background: white;
+  color: #333;
+  padding: 1rem 1.4rem;
+  border-radius: 18px;
+  display: inline-block;
+  max-width: 420px;
+  font-size: 1.1rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  text-align: left;
+}
+
+    /* Capa de brillo romántico general en todo el fondo */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 20% 30%, rgba(255,105,180,0.14) 0%, transparent 55%),
+                  radial-gradient(circle at 80% 70%, rgba(255,20,147,0.12) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: -2;
+      animation: softPulse 12s infinite alternate ease-in-out;
+    }
+
+    @keyframes softPulse {
+      0%   { opacity: 0.55; }
+      100% { opacity: 1; }
+    }
+
+    /* Gradiente animado más suave y lento */
+    @keyframes gradientMove {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ==============================================
+       2. ESTRUCTURA COMÚN DE LAS TRES PANTALLAS
+    ============================================== */
+    .stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      transition: opacity 1.5s ease, transform 1.3s ease;
+      overflow-y: hidden; /* sin scroll por defecto */
+    }
+
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(80px);
+    }
+
+    /* Títulos principales con glow romántico */
+    h1, .contador-texto {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.1rem;
+      color: #ff4da6;
+      margin-bottom: 2.2rem;
+      text-shadow: 0 0 28px rgba(255,77,166,0.75), 0 0 18px rgba(199,21,133,0.5);
+      letter-spacing: 1.2px;
+      animation: titleGlow 5s infinite alternate ease-in-out;
+    }
+
+    @keyframes titleGlow {
+      from { text-shadow: 0 0 18px rgba(255,77,166,0.6); }
+      to   { text-shadow: 0 0 40px rgba(255,77,166,1), 0 0 25px rgba(199,21,133,0.7); }
+    }
+
+    /* Cursor personalizado con corazoncito en elementos interactivos */
+    .envelope-wrapper,
+    .big-heart-wrapper,
+    .big-heart {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38"><text y="30" font-size="30">❤️</text></svg>'), pointer;
+    }
+
+    /* ==============================================
+       PANTALLA 1 - SOBRE DE AMOR
+    ============================================== */
+    .envelope-wrapper {
+      position: relative;
+      width: 390px;
+      height: 280px;
+      perspective: 1500px;
+      cursor: pointer;
+      animation: envelopeGlow 6s infinite alternate ease-in-out;
+    }
+
+    @keyframes envelopeGlow {
+      from { filter: drop-shadow(0 0 15px rgba(255,105,180,0.55)); }
+      to   { filter: drop-shadow(0 0 35px rgba(255,20,147,0.95)); }
+    }
+
+    .envelope {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.9s ease;
+    }
+
+    .envelope:hover {
+      transform: rotateX(16deg) scale(1.09);
+    }
+
+    .envelope-back,
+    .envelope-front,
+    .envelope-flap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(199,21,133,0.5);
+    }
+
+    .envelope-back {
+      background: linear-gradient(135deg, #ffffff, #fff9fb);
+      z-index: 1;
+    }
+
+    .envelope-front {
+      background: linear-gradient(135deg, #fff0f5, #ffd1dc, #ffbad1);
+      transform: translateZ(6px);
+      z-index: 2;
+    }
+
+    .envelope-flap {
+      height: 62%;
+      top: 0;
+      background: linear-gradient(to bottom, #ff9eca, #ff4da6, #ff1493);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top;
+      transition: transform 0.9s ease;
+      z-index: 3;
+    }
+
+    .envelope:hover .envelope-flap {
+      transform: rotateX(150deg);
+    }
+
+    .letter-text {
+      position: absolute;
+      top: 48%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.65rem;
+      color: #c71585;
+      font-weight: bold;
+      text-shadow: 0 4px 12px rgba(255,255,255,0.97);
+      z-index: 5;
+      pointer-events: none;
+      animation: textFloat 7s infinite ease-in-out;
+    }
+
+    @keyframes textFloat {
+      0%,100% { transform: translate(-50%, -50%) translateY(0); }
+      50%     { transform: translate(-50%, -50%) translateY(-10px); }
+    }
+
+    .envelope::before,
+    .envelope::after {
+      content: "💕 ❤️ 💕 ❤️ 💕 💗 💓 💝";
+      position: absolute;
+      font-size: 1.45rem;
+      color: #ff69b4;
+      opacity: 0.94;
+      letter-spacing: 11px;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .envelope::before { top: -45px; left: 50%; transform: translateX(-50%); }
+    .envelope::after  { bottom: -45px; left: 50%; transform: translateX(-50%); font-size: 1.35rem; }
+
+    /* Corazones latiendo alrededor del sobre - más detallados */
+    .heart-near {
+      position: absolute;
+      font-size: 3.2rem;
+      color: #ff1493;
+      opacity: 0.84;
+      animation: pulseNear 4.2s infinite ease-in-out;
+    }
+
+    .heart-pos-1 { top: 3%;   left: 5%;   animation-delay: 0s;     }
+    .heart-pos-2 { top: 24%;  right: 7%;  animation-delay: 0.8s;   }
+    .heart-pos-3 { bottom: 9%; left: 10%; animation-delay: 1.5s;   }
+    .heart-pos-4 { bottom: 5%; right: 12%; animation-delay: 2.2s;  }
+    .heart-pos-5 { top: 38%;   left: 16%; animation-delay: 3s;     }
+    .heart-pos-6 { bottom: 25%; right: 18%; animation-delay: 3.8s; }
+
+    @keyframes pulseNear {
+      0%, 100% { transform: scale(1)   rotate(0deg);   opacity: 0.84; }
+      50%      { transform: scale(1.45) rotate(14deg); opacity: 1;    }
+    }
+
+    /* ==============================================
+       PANTALLA 2 - CORAZÓN LATIENTE (CON SCROLL)
+    ============================================== */
+    .big-heart-wrapper {
+      position: relative;
+      cursor: pointer;
+      margin: 1.5rem 0;
+    }
+
+    .big-heart {
+      width: 190px;               /* ← REDUCIDO como pediste */
+      height: 190px;
+      background: linear-gradient(135deg, #ff4da6, #ff1493);
+      transform: rotate(45deg);
+      margin-bottom: 2.5rem;
+      animation: heartbeat 1.6s infinite;
+      position: relative;
+      box-shadow: 0 0 70px rgba(255,77,166,0.85), 0 0 35px rgba(255,20,147,0.6);
+      transition: transform 0.7s ease, box-shadow 0.7s ease;
+    }
+
+    .big-heart:hover {
+      transform: rotate(45deg) scale(1.20);
+      box-shadow: 0 0 130px rgba(255,20,147,1), 0 0 60px rgba(199,21,133,0.8);
+    }
+
+    .big-heart::before,
+    .big-heart::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      background: #ff4da6;
+      border-radius: 50%;
+    }
+
+    .big-heart::before { top: -95px; left: 0; }
+    .big-heart::after  { left: -95px; top: 0; }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: rotate(45deg) scale(1);   }
+      50%      { transform: rotate(45deg) scale(1.24); }
+    }
+
+    /* Corazones decorativos fijos alrededor del mensaje en pantalla 2 */
+    .message-decor {
+      position: absolute;
+      font-size: 2.5rem;
+      color: #ff69b4;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: -1;
+      animation: floatDecor 10s infinite ease-in-out;
+    }
+
+    .decor-1 { top: 10%; left: 5%;  animation-delay: 0s;   }
+    .decor-2 { top: 15%; right: 8%; animation-delay: 2s;   }
+    .decor-3 { bottom: 20%; left: 10%; animation-delay: 4s; }
+    .decor-4 { bottom: 12%; right: 6%; animation-delay: 6s; }
+
+    @keyframes floatDecor {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50%     { transform: translateY(-20px) rotate(8deg); }
+    }
+
+    .explode-heart {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      background: #ff69b4;
+      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 50% 75%, 18% 100%, 0 38%);
+      opacity: 0;
+      pointer-events: none;
+      animation: explodeHeart 1.7s ease-out forwards;
+    }
+
+    @keyframes explodeHeart {
+      0%   { transform: scale(0.4) translate(0,0); opacity: 1; }
+      35%  { opacity: 1; }
+      100% { transform: scale(1.9) translate(var(--tx), var(--ty)); opacity: 0; }
+    }
+
+    .message {
+      font-size: 1.85rem;
+      max-width: 740px;
+      line-height: 2;
+      animation: fadeIn 2.4s forwards;
+      opacity: 0;
+      margin: 1.2rem 0;
+      position: relative;
+    }
+
+    .message p {
+      margin: 1rem 0;
+    }
+
+    .message p.spacing-top {
+      margin-top: 1.8rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(50px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .extra-love {
+      font-size: 2.4rem;
+      color: #ff1493;
+      margin-top: 2.8rem;
+      font-weight: bold;
+      opacity: 0;
+      animation: fadeInExtra 2.2s forwards 3s, lovePulse 4s infinite alternate 5s;
+      text-shadow: 0 0 18px rgba(255,20,147,0.7);
+    }
+
+    @keyframes fadeInExtra {
+      from { opacity: 0; transform: scale(0.6) translateY(30px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes lovePulse {
+      from { transform: scale(1); }
+      to   { transform: scale(1.08); }
+    }
+
+    /* ==============================================
+       SCROLL SOLO EN PANTALLA 2 - MEJORADO
+    ============================================== */
+    #stage2 {
+      justify-content: flex-start;
+      padding-top: 5rem;
+      padding-bottom: 7rem;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    #stage2::-webkit-scrollbar {
+      width: 9px;
+    }
+
+    #stage2::-webkit-scrollbar-track {
+      background: rgba(255, 182, 193, 0.25);
+      border-radius: 12px;
+    }
+
+    #stage2::-webkit-scrollbar-thumb {
+      background: linear-gradient(#ff69b4, #ff1493);
+      border-radius: 12px;
+    }
+
+    #stage2::-webkit-scrollbar-thumb:hover {
+      background: #ff4081;
+    }
+
+    /* Ajustes para móviles - corazón más pequeño y texto adaptable */
+    @media (max-height: 720px) or (max-width: 520px) {
+      #stage2 {
+        padding: 2.5rem 1.3rem;
+      }
+
+      .big-heart {
+        width: 160px !important;
+        height: 160px !important;
+        margin-bottom: 2.2rem !important;
+      }
+
+      .big-heart::before,
+      .big-heart::after {
+        width: 160px !important;
+        height: 160px !important;
+      }
+
+      .big-heart::before { top: -80px !important; }
+      .big-heart::after  { left: -80px !important; }
+
+      .message {
+        font-size: 1.6rem;
+        max-width: 96%;
+      }
+
+      .extra-love {
+        font-size: 2.1rem;
+        margin-top: 2rem;
+      }
+    }
+
+    /* ==============================================
+       PANTALLA 3 - CONTADOR ETERNO (sin cambios mayores)
+    ============================================== */
+    .contador-texto {
+      font-size: 2.3rem;
+      margin-bottom: 1.6rem;
+    }
+
+    #countdown {
+      font-size: 3.6rem;
+      color: #ff1493;
+      margin: 2.2rem 0;
+      text-shadow: 0 0 38px rgba(255,20,147,1), 0 0 65px rgba(255,20,147,0.75);
+      animation: glowPulse 3.2s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 28px rgba(255,20,147,0.85); }
+      to   { text-shadow: 0 0 60px rgba(255,20,147,1), 0 0 85px rgba(199,21,133,0.85); }
+    }
+
+    .final-message {
+      font-size: 2.1rem;
+      color: #c71585;
+      margin-top: 2.8rem;
+      opacity: 0;
+      animation: fadeIn 3.2s forwards 2.2s;
+      text-shadow: 0 0 22px rgba(199,21,133,0.65);
+    }
+
+    /* Globos románticos subiendo */
+    .balloon {
+      position: absolute;
+      font-size: 4.8rem;
+      opacity: 0.93;
+      pointer-events: none;
+      z-index: -1;
+      animation: floatBalloon 24s linear infinite;
+    }
+
+    @keyframes floatBalloon {
+      0%   { transform: translateY(150vh) rotate(0deg); opacity: 0; }
+      7%   { opacity: 0.99; }
+      93%  { opacity: 0.99; }
+      100% { transform: translateY(-55vh) rotate(1260deg); opacity: 0; }
+    }
+
+    /* Confeti/corazones cayendo festivo */
+    .confetti-heart {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      background: #ff69b4;
+      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 50% 75%, 18% 100%, 0 38%);
+      opacity: 0;
+      pointer-events: none;
+      animation: fallConfetti 6.5s ease-out forwards;
+    }
+
+    @keyframes fallConfetti {
+      0%   { transform: translateY(-150vh) rotate(0deg) scale(0.5); opacity: 0.92; }
+      20%  { opacity: 1; transform: translateY(0) rotate(720deg) scale(1.5); }
+      100% { transform: translateY(170vh) rotate(1800deg) scale(0.6); opacity: 0; }
+    }
+
+    /* Contenedores de fondo */
+    #stars,
+    #hearts-bg,
+    #balloons-container {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      width: 6.5px;
+      height: 6.5px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3.5s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.45; }
+      50%      { opacity: 1; }
+    }
+
+    .heart-bg {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background: #ff69b4;
+      clip-path: polygon(50% 0%,100% 38%,82% 100%,50% 75%,18% 100%,0 38%);
+      opacity: .4;
+      animation: float var(--heart-speed, 12s) linear infinite;
+    }
+
+    @keyframes float {
+      from { transform: translateY(140vh); }
+      to   { transform: translateY(-45vh) rotate(1260deg); }
+    }
+  </style>
+</head>
+
+
+<body>
+  <audio id="bg-music" loop>
+  <source src="admv.mp3" type="audio/mpeg">
+</audio>
+
+
+  <div id="stars"></div>
+  <div id="hearts-bg"></div>
+
+  <!-- PANTALLA 1 -->
+  <section class="stage" id="stage1">
+    <h1>Para la niña que me enamoró con el simple hecho de ser ella
+      ¿Quieres ser mi novia?
+    </h1>
+
+    <div class="envelope-wrapper" id="press-me">
+      <div class="envelope">
+        <div class="envelope-back"></div>
+        <div class="envelope-front"></div>
+        <div class="envelope-flap"></div>
+      </div>
+      <div class="letter-text">💌 Presiona la carta mi amor</div>
+
+      <div class="heart-near heart-pos-1">❤️</div>
+      <div class="heart-near heart-pos-2">💕</div>
+      <div class="heart-near heart-pos-3">❤️</div>
+      <div class="heart-near heart-pos-4">💖</div>
+      <div class="heart-near heart-pos-5">💗</div>
+      <div class="heart-near heart-pos-6">💓</div>
+    </div>
+  </section>
+
+  <!-- PANTALLA 2 - CON SCROLL Y CORAZÓN MÁS PEQUEÑO -->
+  <section class="stage hidden" id="stage2">
+    <div class="big-heart-wrapper">
+      <div id="big-heart" class="big-heart"></div>
+    </div>
+
+    <p>El inicio del tercer intento jsjsjs ...</p>
+  <div class="chat-bubble">
+    31/01/2026, 10:39 a. m.<br>
+    <strong>Moises :</strong> La neta creo que sí necesito un/a secretari@, me undo en mis tareas y pendientes
+  </div>
+
+
+    <!-- Corazones decorativos fijos alrededor del mensaje -->
+    <div class="message-decor decor-1">💞</div>
+    <div class="message-decor decor-2">💖</div>
+    <div class="message-decor decor-3">❤️</div>
+    <div class="message-decor decor-4">💕</div>
+
+    <div class="message">
+      <p>Ha sido un año lleno de momentos inolvidables…</p>
+      <p>Risas, aprendizajes, abrazos, aventuras y sueños compartidos.</p>
+      <p>Cada día contigo ha sido un regalo que guardo en mi corazón.</p>
+      <p>Y este tiempo solo confirma que quiero seguir caminando contigo ❤️</p>
+      <p class="spacing-top">Cada mirada tuya ilumina mi mundo entero.</p>
+      <p>Y cada abrazo tuyo me recuerda que el amor verdadero existe.</p>
+      <p>Gracias por ser tú, por ser mi todo, por ser mi hogar.</p>
+    </div>
+
+    
+    <p>El primer te amo...</p>
+  <div class="chat-bubble">
+    10/3/2025, 11:49 p. m.<br>
+    <strong>Moises :</strong> Bueno ya no te molesto mas te amo 😍 bye
+  </div>
+
+</section>   <!-- ← ESTE ES EL CIERRE CORRECTO DE STAGE2 -->
+
+  <!-- PANTALLA 3 -->
+  <section class="stage hidden" id="stage3">
+
+    <div id="balloons-container"></div>
+    <div class="first-message">
+  <p>Todo comenzó con un simple mensaje...</p>
+  <div class="chat-bubble">
+    28/02/2025, 8:36 p. m.<br>
+    <strong>Kimi ❤️:</strong> Holaa Buenas noches, te quedaste mi anillo me lo guardas plis, gracias
+  </div>
+</div>
+
+    <p class="contador-texto">Mi amor por ti comenzó hace...</p>
+    <h2 id="countdown"></h2>
+
+
+    <div class="final-message">...y seguirá creciendo por toda la eternidad 💍❤️</div>
+  </section>
+
+  <script>
+    // ==============================================
+    // REFERENCIAS AL DOM Y VARIABLES GLOBALES
+    // ==============================================
+    const stages = [
+      document.getElementById('stage1'),
+      document.getElementById('stage2'),
+      document.getElementById('stage3')
+    ];
+
+    const pressBtn    = document.getElementById('press-me');
+    const bigHeart    = document.getElementById('big-heart');
+    const countdownEl = document.getElementById('countdown');
+    const balloonsContainer = document.getElementById('balloons-container');
+
+    // Fecha de inicio (cámbiala a la fecha real de ustedes si quieres)
+    const startDate = new Date('2025-02-28T20:36:00');
+
+
+    // ==============================================
+    // NAVEGACIÓN ENTRE PANTALLAS
+    // ==============================================
+    pressBtn.onclick = () => {
+  // Iniciar música al primer clic
+  const music = document.getElementById('bg-music');
+  music.play();
+
+  stages[0].classList.add('hidden');
+  stages[1].classList.remove('hidden');
+};
+
+
+    bigHeart.onclick = () => {
+      stages[1].classList.add('hidden');
+      stages[2].classList.remove('hidden');
+
+      // Explosión de corazones más intensa
+      const wrapper = bigHeart.parentElement;
+      for (let i = 0; i < 40; i++) {  // Aumenté a 40
+        const heart = document.createElement('div');
+        heart.className = 'explode-heart';
+        const angle = Math.random() * 360;
+        const distance = 160 + Math.random() * 240;
+        const tx = Math.cos(angle * Math.PI / 180) * distance;
+        const ty = Math.sin(angle * Math.PI / 180) * distance;
+        heart.style.setProperty('--tx', tx + 'px');
+        heart.style.setProperty('--ty', ty + 'px');
+        heart.style.left = '50%';
+        heart.style.top  = '50%';
+        heart.style.transform = `translate(-50%, -50%) rotate(${Math.random()*1080}deg) scale(${0.6 + Math.random()*1.2})`;
+        const colors = ['#ff69b4','#ff1493','#ff4da6','#c71585','#ffb6c1','#db7093','#ff85c0','#ff4081','#f06292'];
+        heart.style.background = colors[Math.floor(Math.random() * colors.length)];
+        wrapper.appendChild(heart);
+        setTimeout(() => heart.remove(), 2000);
+      }
+
+      // Acelerar corazones flotantes temporalmente
+      document.body.style.setProperty('--heart-speed', '4s');
+      setTimeout(() => document.body.style.setProperty('--heart-speed', '12s'), 8000);
+
+      // Confeti extra en pantalla 3
+      setTimeout(() => {
+        for (let i = 0; i < 60; i++) {  // Más confeti
+          const conf = document.createElement('div');
+          conf.className = 'confetti-heart';
+          conf.style.left = Math.random() * 100 + 'vw';
+          conf.style.animationDelay = Math.random() * 5 + 's';
+          const colors = ['#ff69b4','#ff1493','#ff4da6','#ffb6c1','#db7093','#ff85c0','#ff4081'];
+          conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+          stages[2].appendChild(conf);
+          setTimeout(() => conf.remove(), 8000);
+        }
+      }, 1400);
+    };
+
+    // ==============================================
+    // CONTADOR DE AMOR
+    // ==============================================
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = now - startDate.getTime();
+
+      const days    = Math.floor(diff / 86400000);
+      const hours   = Math.floor((diff % 86400000) / 3600000);
+      const minutes = Math.floor((diff % 3600000)  / 60000);
+      const seconds = Math.floor((diff % 60000)    / 1000);
+
+      countdownEl.textContent = `${days} días ${hours} horas ${minutes} minutos ${seconds} segundos`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // ==============================================
+    // ESTRELLAS PARPADEANTES
+    // ==============================================
+    function createStars() {
+      const container = document.getElementById('stars');
+      for (let i = 0; i < 120; i++) {  // Más estrellas
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.top  = Math.random() * 100 + 'vh';
+        star.style.animationDelay = Math.random() * 4 + 's';
+        star.style.animationDuration = (2.5 + Math.random() * 4) + 's';
+        container.appendChild(star);
+      }
+    }
+    createStars();
+
+    // ==============================================
+    // CORAZONES FLOTANTES EN TODO EL FONDO
+    // ==============================================
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart-bg';
+      heart.style.left = Math.random() * 100 + 'vw';
+      const size = 16 + Math.random() * 16; // variación grande
+      heart.style.width = size + 'px';
+      heart.style.height = size + 'px';
+      heart.style.opacity = 0.25 + Math.random() * 0.25;
+      document.getElementById('hearts-bg').appendChild(heart);
+      setTimeout(() => heart.remove(), 22000);
+    }
+
+    setInterval(createHeart, 600);  // Aún más frecuentes
+
+    // ==============================================
+    // GLOBOS SUBIENDO EN PANTALLA FINAL
+    // ==============================================
+    function createBalloons() {
+      const emojis = ['❤️','💕','💖','💗','💘','💓','💞','💝','🫶','💟'];
+      for (let i = 0; i < 22; i++) {  // Más globos
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        balloon.style.left = Math.random() * 100 + 'vw';
+        const duration = 20 + Math.random() * 16;
+        balloon.style.animationDuration = duration + 's';
+        balloon.style.animationDelay = Math.random() * 12 + 's';
+        const scale = 0.7 + Math.random() * 1;
+        balloon.style.transform = `scale(${scale})`;
+        balloonsContainer.appendChild(balloon);
+        setTimeout(() => balloon.remove(), duration * 1000 + 6000);
+      }
+    }
+
+    const observer = new MutationObserver(() => {
+      if (!stages[2].classList.contains('hidden')) {
+        createBalloons();
+        setInterval(createBalloons, 16000);
+      }
+    });
+
+    observer.observe(stages[2], { attributes: true, attributeFilter: ['class'] });
+
+    if (!stages[2].classList.contains('hidden')) {
+      createBalloons();
+    }
+  </script>
+
+</body>
+</html>
